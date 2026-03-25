@@ -19,8 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
   bool _isLoading = true;
   String _searchQuery = '';
 
-  // FIX: Separate counter for total posts so the stats bar always shows
-  // the real total, not the filtered count when the user is searching.
+  
   int _totalPostsCount = 0;
 
   @override
@@ -114,8 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if (confirmed == true) {
       try {
         await _dbHelper.deletePost(post.id!);
-        // FIX: Added await so the list fully refreshes before showing the
-        // success snackbar, preventing a brief visual inconsistency.
+        
         await _loadPosts();
         _showSuccessSnackBar('Post deleted successfully');
       } catch (e) {
@@ -150,14 +148,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       Icon(
                         Icons.article_outlined,
                         size: 60,
-                        // FIX: Replaced deprecated withOpacity() with withValues().
                         color: Colors.white.withValues(alpha: 0.8),
                       ),
                       const SizedBox(height: 8),
                       Text(
                         'Manage Your Content',
                         style: TextStyle(
-                          // FIX: Replaced deprecated withOpacity() with withValues().
                           color: Colors.white.withValues(alpha: 0.9),
                           fontSize: 16,
                         ),
@@ -178,7 +174,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     borderRadius: BorderRadius.circular(12),
                     boxShadow: [
                       BoxShadow(
-                        // FIX: Replaced deprecated withOpacity() with withValues().
                         color: Colors.black.withValues(alpha: 0.05),
                         blurRadius: 10,
                         offset: const Offset(0, 2),
@@ -188,8 +183,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: TextField(
                     onChanged: (value) {
                       setState(() => _searchQuery = value);
-                      // FIX: Added debounce to avoid hammering the database
-                      // on every single keystroke.
+                      
                       Future.delayed(const Duration(milliseconds: 400), () {
                         if (_searchQuery == value) {
                           _searchPosts(value);
@@ -226,8 +220,7 @@ class _HomeScreenState extends State<HomeScreen> {
             MaterialPageRoute(builder: (context) => const AddEditPostScreen()),
           );
           if (result == true) {
-            // FIX: Show success snackbar here (not in AddEditPostScreen)
-            // so it's visible after navigation completes.
+            
             _showSuccessSnackBar('Post created successfully');
             _loadPosts();
           }
@@ -267,12 +260,10 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               const SizedBox(height: 4),
               Text(
-                // FIX: Show real total count, not the filtered list length.
                 '$_totalPostsCount',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
-                  // FIX: Using theme color instead of hardcoded value.
                   color: primaryColor,
                 ),
               ),
@@ -281,7 +272,6 @@ class _HomeScreenState extends State<HomeScreen> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
             decoration: BoxDecoration(
-              // FIX: Using theme color + withValues() instead of hardcoded + withOpacity().
               color: primaryColor.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(20),
             ),
@@ -293,7 +283,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   'Offline Mode',
                   style: TextStyle(
                     fontSize: 12,
-                    // FIX: Using theme color instead of hardcoded value.
                     color: primaryColor,
                     fontWeight: FontWeight.w500,
                   ),
@@ -368,8 +357,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               PostDetailScreen(post: _posts[index]),
                         ),
                       );
-                      // FIX: Handle both 'true' (edited) and 'deleted' results
-                      // from the detail screen.
+                    
                       if (result == true || result == 'deleted') {
                         await _loadPosts();
                       }
@@ -378,8 +366,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       }
                     },
                     onDelete: () => _deletePost(_posts[index]),
-                    // FIX: Added missing onEdit callback that was causing a
-                    // compile error after adding onEdit to PostCard.
+                   
                     onEdit: () async {
                       final result = await Navigator.push(
                         context,

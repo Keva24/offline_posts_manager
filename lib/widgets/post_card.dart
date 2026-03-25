@@ -6,8 +6,7 @@ class PostCard extends StatelessWidget {
   final Post post;
   final VoidCallback onTap;
   final VoidCallback onDelete;
-  // FIX: Added onEdit callback — was missing entirely, preventing users
-  // from editing posts directly from the list.
+ 
   final VoidCallback onEdit;
 
   const PostCard({
@@ -35,7 +34,6 @@ class PostCard extends StatelessWidget {
             border: Border.all(color: Colors.grey.shade200),
             boxShadow: [
               BoxShadow(
-                // FIX: Replaced deprecated withOpacity() with withValues().
                 color: Colors.grey.withValues(alpha: 0.05),
                 blurRadius: 10,
                 offset: const Offset(0, 2),
@@ -102,7 +100,6 @@ class PostCard extends StatelessWidget {
                       color: Colors.grey.shade600,
                     ),
                     itemBuilder: (context) => [
-                      // FIX: Added Edit option to the popup menu.
                       PopupMenuItem(
                         value: 'edit',
                         child: Row(
@@ -128,9 +125,7 @@ class PostCard extends StatelessWidget {
                       if (value == 'edit') {
                         onEdit();
                       } else if (value == 'delete') {
-                        // FIX: Added confirmation dialog before deleting.
-                        // Previously, tapping Delete immediately removed the
-                        // post with no way to recover it.
+                        
                         showDialog(
                           context: context,
                           builder: (ctx) => AlertDialog(
@@ -185,8 +180,7 @@ class PostCard extends StatelessWidget {
                       vertical: 4,
                     ),
                     decoration: BoxDecoration(
-                      // FIX: Using theme color instead of hardcoded value.
-                      // FIX: Replaced deprecated withOpacity() with withValues().
+                      
                       color: primaryColor.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(12),
                     ),
@@ -197,7 +191,6 @@ class PostCard extends StatelessWidget {
                           'Read More',
                           style: TextStyle(
                             fontSize: 12,
-                            // FIX: Using theme color instead of hardcoded value.
                             color: primaryColor,
                             fontWeight: FontWeight.w500,
                           ),
@@ -206,7 +199,6 @@ class PostCard extends StatelessWidget {
                         Icon(
                           Icons.arrow_forward,
                           size: 12,
-                          // FIX: Using theme color instead of hardcoded value.
                           color: primaryColor,
                         ),
                       ],

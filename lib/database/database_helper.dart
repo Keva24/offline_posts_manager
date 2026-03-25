@@ -35,9 +35,8 @@ class DatabaseHelper {
         path,
         version: _databaseVersion,
         onCreate: _onCreate,
-        // FIX: Added onUpgrade handler to prevent crashes on future version bumps.
         onUpgrade: (db, oldVersion, newVersion) async {
-          // Handle future schema migrations here.
+          
         },
       );
     } catch (e) {
@@ -69,9 +68,7 @@ class DatabaseHelper {
       return await db.insert(
         _tableName,
         post.toMap(),
-        // FIX: Changed from ConflictAlgorithm.replace to .abort.
-        // .replace silently deletes and re-inserts the row (changing its id),
-        // which is dangerous for a posts manager.
+        
         conflictAlgorithm: ConflictAlgorithm.abort,
       );
     } catch (e) {
@@ -119,11 +116,7 @@ class DatabaseHelper {
   Future<int> updatePost(Post post) async {
     try {
       final db = await database;
-      // FIX 1: Remove 'id' from the update map to avoid passing it
-      // in the data alongside the WHERE clause, which can cause conflicts.
-      // FIX 2: Manually set 'updated_at' to now, since the Post object's
-      // updatedAt is already set correctly in AddEditPostScreen, but
-      // this acts as a safety net.
+  
       final map = post.toMap()..remove('id');
       map['updated_at'] = DateTime.now().toIso8601String();
 

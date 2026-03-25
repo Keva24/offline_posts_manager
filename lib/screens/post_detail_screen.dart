@@ -13,9 +13,7 @@ class PostDetailScreen extends StatefulWidget {
 }
 
 class _PostDetailScreenState extends State<PostDetailScreen> {
-  // FIX: Store post in local state so it can reflect updates after editing.
-  // Previously, widget.post was used directly, which would show stale data
-  // if the user edited and returned to this screen.
+  
   late Post _post;
   final DatabaseHelper _dbHelper = DatabaseHelper();
 
@@ -25,8 +23,6 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
     _post = widget.post;
   }
 
-  // FIX: Added delete functionality to the detail screen.
-  // Previously users had to navigate back to the home screen to delete a post.
   Future<void> _confirmDelete() async {
     final confirmed = await showDialog<bool>(
       context: context,
@@ -93,7 +89,6 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
               }
             },
           ),
-          // FIX: Added delete button to the AppBar.
           IconButton(
             icon: const Icon(Icons.delete_outline, color: Colors.red),
             onPressed: _confirmDelete,
@@ -110,7 +105,6 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  // FIX: Using theme colors instead of hardcoded values.
                   colors: [
                     colorScheme.primary,
                     colorScheme.primaryContainer,
@@ -140,7 +134,6 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                           vertical: 4,
                         ),
                         decoration: BoxDecoration(
-                          // FIX: Replaced deprecated withOpacity() with withValues().
                           color: Colors.white.withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(20),
                         ),
@@ -166,7 +159,6 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                           vertical: 4,
                         ),
                         decoration: BoxDecoration(
-                          // FIX: Replaced deprecated withOpacity() with withValues().
                           color: Colors.white.withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(20),
                         ),

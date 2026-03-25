@@ -31,8 +31,7 @@ class Post {
     return map;
   }
 
-  // FIX: Added null-safe casting on all fields to prevent runtime crashes
-  // if a DB row is missing a field due to corruption or a schema change.
+  
   factory Post.fromMap(Map<String, dynamic> map) {
     return Post(
       id: map['id'] as int?,

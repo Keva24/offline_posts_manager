@@ -60,9 +60,7 @@ class _AddEditPostScreenState extends State<AddEditPostScreen> {
         }
 
         if (mounted) {
-          // FIX: Pop with true FIRST, then let the home screen show the
-          // snackbar. Previously, the snackbar was shown on this screen
-          // before popping, so it disappeared before the user could read it.
+          
           Navigator.pop(context, true);
         }
       } catch (e) {
@@ -89,8 +87,7 @@ class _AddEditPostScreenState extends State<AddEditPostScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // FIX: Wrapped with PopScope to warn user about unsaved changes
-    // when tapping the back button.
+    
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (didPop, result) async {
@@ -141,9 +138,7 @@ class _AddEditPostScreenState extends State<AddEditPostScreen> {
             children: [
               TextFormField(
                 controller: _titleController,
-                // FIX: Added textCapitalization for better mobile UX.
                 textCapitalization: TextCapitalization.sentences,
-                // FIX: Added maxLength to prevent unreasonably long titles.
                 maxLength: 100,
                 decoration: const InputDecoration(
                   labelText: 'Title',
@@ -155,7 +150,6 @@ class _AddEditPostScreenState extends State<AddEditPostScreen> {
                   if (value == null || value.trim().isEmpty) {
                     return 'Please enter a title';
                   }
-                  // FIX: Added minimum length validation.
                   if (value.trim().length < 3) {
                     return 'Title must be at least 3 characters';
                   }
@@ -165,9 +159,7 @@ class _AddEditPostScreenState extends State<AddEditPostScreen> {
               const SizedBox(height: 16),
               TextFormField(
                 controller: _authorController,
-                // FIX: Added textCapitalization for better mobile UX.
                 textCapitalization: TextCapitalization.words,
-                // FIX: Added maxLength to prevent unreasonably long author names.
                 maxLength: 50,
                 decoration: const InputDecoration(
                   labelText: 'Author',
