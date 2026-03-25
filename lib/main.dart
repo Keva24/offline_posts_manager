@@ -8,9 +8,7 @@ import 'screens/home_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // FIX: Initialize the correct database factory based on the platform.
-  // sqflite alone only works on mobile. For web, we must set the factory
-  // to sqflite_common_ffi_web before any database calls are made.
+  
   if (kIsWeb) {
     databaseFactory = databaseFactoryFfiWeb;
   }
